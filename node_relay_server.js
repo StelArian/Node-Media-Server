@@ -20,7 +20,7 @@ class NodeRelayServer {
     this.dynamicSessions = new Map();
   }
 
-  async run(callback) {
+  async run(run_callback) {
     try {
       fs.accessSync(this.config.relay.ffmpeg, fs.constants.X_OK);
     } catch (error) {
@@ -42,7 +42,7 @@ class NodeRelayServer {
     context.nodeEvent.on('donePublish', this.onDonePublish.bind(this));
     this.staticCycle = setInterval(this.onStatic.bind(this), 1000);
     Logger.log('Node Media Relay Server started');
-    if (typeof callback === "function") return callback();
+    if (typeof run_callback === "function") return run_callback();
   }
 
   onStatic() {

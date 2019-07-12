@@ -18,7 +18,7 @@ class NodeTransServer {
     this.transSessions = new Map();
   }
 
-  async run(callback) {
+  async run(run_callback) {
     try {
       mkdirp.sync(this.config.http.mediaroot);
       fs.accessSync(this.config.http.mediaroot, fs.constants.W_OK);
@@ -50,7 +50,7 @@ class NodeTransServer {
     context.nodeEvent.on('postPublish', this.onPostPublish.bind(this));
     context.nodeEvent.on('donePublish', this.onDonePublish.bind(this));
     Logger.log(`Node Media Trans Server started for apps: [ ${apps}] , MediaRoot: ${this.config.http.mediaroot}, ffmpeg version: ${version}`);
-    if (typeof callback === "function") return callback();
+    if (typeof run_callback === "function") return run_callback();
   }
 
   onPostPublish(id, streamPath, args) {
