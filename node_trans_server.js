@@ -50,7 +50,7 @@ class NodeTransServer {
     context.nodeEvent.on('postPublish', this.onPostPublish.bind(this));
     context.nodeEvent.on('donePublish', this.onDonePublish.bind(this));
     Logger.log(`Node Media Trans Server started for apps: [ ${apps}] , MediaRoot: ${this.config.http.mediaroot}, ffmpeg version: ${version}`);
-    if (typeof callback === "function") callback();
+    if (typeof callback === "function") return callback();
   }
 
   onPostPublish(id, streamPath, args) {
