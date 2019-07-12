@@ -18,17 +18,17 @@ class NodeMediaServer {
     this.config = config;
   }
 
-  run() {
+  run(callback) {
     Logger.setLogType(this.config.logType);
     Logger.log(`Node Media Server v${Package.version}`);
     if (this.config.rtmp) {
       this.nrs = new NodeRtmpServer(this.config);
-      this.nrs.run();
+      this.nrs.run(callback);
     }
 
     if (this.config.http) {
       this.nhs = new NodeHttpServer(this.config);
-      this.nhs.run();
+      this.nhs.run(callback);
     }
 
     if (this.config.trans) {
@@ -36,7 +36,7 @@ class NodeMediaServer {
         Logger.log('NodeTransServer does not work in cluster mode');
       } else {
         this.nts = new NodeTransServer(this.config);
-        this.nts.run();
+        this.nts.run(callback);
       }
     }
 
@@ -45,7 +45,7 @@ class NodeMediaServer {
         Logger.log('NodeRelayServer does not work in cluster mode');
       } else {
         this.nls = new NodeRelayServer(this.config);
-        this.nls.run();
+        this.nls.run(callback);
       }
     }
 

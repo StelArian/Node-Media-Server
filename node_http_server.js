@@ -84,9 +84,10 @@ class NodeHttpServer {
     }
   }
 
-  run() {
+  run(callback) {
     this.httpServer.listen(this.port, () => {
       Logger.log(`Node Media Http Server started on port: ${this.port}`);
+      if (typeof callback === "function") callback();
     });
 
     this.httpServer.on('error', (e) => {
