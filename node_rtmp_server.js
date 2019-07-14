@@ -22,10 +22,9 @@ class NodeRtmpServer {
     })
   }
 
-  run(run_callback) {
+  run() {
     this.tcpServer.listen(this.port, () => {
       Logger.log(`Node Media Rtmp Server started on port: ${this.port}`);
-      if (typeof run_callback === "function") return run_callback();
     });
 
     this.tcpServer.on('error', (e) => {
