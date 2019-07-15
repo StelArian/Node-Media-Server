@@ -87,11 +87,12 @@ class NodeHttpServer {
   run() {
     this.httpServer.listen(this.port, () => {
       Logger.log(`Node Media Http Server started on port: ${this.port}`);
-      context.nodeEvent.emit("runDoneHttpServer", this.port);
+      context.nodeEvent.emit("readyHttpServer", null);
     });
 
     this.httpServer.on('error', (e) => {
-      Logger.error(`Node Media Http Server ${e}`);
+      // Logger.error(`Node Media Http Server ${e}`);
+      context.nodeEvent.emit("readyHttpServer", e);
     });
 
     this.httpServer.on('close', () => {
@@ -107,20 +108,23 @@ class NodeHttpServer {
 
     this.wsServer.on('listening', () => {
       Logger.log(`Node Media WebSocket Server started on port: ${this.port}`);
-      context.nodeEvent.emit("runDoneWsServer", this.port);
+      context.nodeEvent.emit("readyWsServer", null);
     });
+
     this.wsServer.on('error', (e) => {
-      Logger.error(`Node Media WebSocket Server ${e}`);
+      // Logger.error(`Node Media WebSocket Server ${e}`);
+      context.nodeEvent.emit("readyWsServer", e);
     });
 
     if (this.httpsServer) {
       this.httpsServer.listen(this.sport, () => {
         Logger.log(`Node Media Https Server started on port: ${this.sport}`);
-        context.nodeEvent.emit("runDoneHttpsServer", this.port);
+        context.nodeEvent.emit("readyHttpsServer", null);
       });
 
       this.httpsServer.on('error', (e) => {
-        Logger.error(`Node Media Https Server ${e}`);
+        // Logger.error(`Node Media Https Server ${e}`);
+        context.nodeEvent.emit("readyHttpsServer", e);
       });
 
       this.httpsServer.on('close', () => {
@@ -136,10 +140,11 @@ class NodeHttpServer {
 
       this.wssServer.on('listening', () => {
         Logger.log(`Node Media WebSocketSecure Server started on port: ${this.sport}`);
-        context.nodeEvent.emit("runDoneWssServer", this.port);
+        context.nodeEvent.emit("readyWssServer", null);
       });
       this.wssServer.on('error', (e) => {
-        Logger.error(`Node Media WebSocketSecure Server ${e}`);
+        // Logger.error(`Node Media WebSocketSecure Server ${e}`);
+        context.nodeEvent.emit("readyWssServer", e);
       });
     }
 
