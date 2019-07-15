@@ -87,12 +87,12 @@ class NodeHttpServer {
   run() {
     this.httpServer.listen(this.port, () => {
       Logger.log(`Node Media Http Server started on port: ${this.port}`);
-      context.nodeEvent.emit("readyHttpServer", null);
+      context.nodeEvent.emit("readyHttpServer_" + this.port, null);
     });
 
     this.httpServer.on('error', (e) => {
       // Logger.error(`Node Media Http Server ${e}`);
-      context.nodeEvent.emit("readyHttpServer", e);
+      context.nodeEvent.emit("readyHttpServer_" + this.port, e);
     });
 
     this.httpServer.on('close', () => {
@@ -108,23 +108,23 @@ class NodeHttpServer {
 
     this.wsServer.on('listening', () => {
       Logger.log(`Node Media WebSocket Server started on port: ${this.port}`);
-      context.nodeEvent.emit("readyWsServer", null);
+      context.nodeEvent.emit("readyWsServer_" + this.port, null);
     });
 
     this.wsServer.on('error', (e) => {
       // Logger.error(`Node Media WebSocket Server ${e}`);
-      context.nodeEvent.emit("readyWsServer", e);
+      context.nodeEvent.emit("readyWsServer_" + this.port, e);
     });
 
     if (this.httpsServer) {
       this.httpsServer.listen(this.sport, () => {
         Logger.log(`Node Media Https Server started on port: ${this.sport}`);
-        context.nodeEvent.emit("readyHttpsServer", null);
+        context.nodeEvent.emit("readyHttpsServer_" + this.sport, null);
       });
 
       this.httpsServer.on('error', (e) => {
         // Logger.error(`Node Media Https Server ${e}`);
-        context.nodeEvent.emit("readyHttpsServer", e);
+        context.nodeEvent.emit("readyHttpsServer_" + this.sport, e);
       });
 
       this.httpsServer.on('close', () => {
@@ -140,11 +140,11 @@ class NodeHttpServer {
 
       this.wssServer.on('listening', () => {
         Logger.log(`Node Media WebSocketSecure Server started on port: ${this.sport}`);
-        context.nodeEvent.emit("readyWssServer", null);
+        context.nodeEvent.emit("readyWssServer_" + this.sport, null);
       });
       this.wssServer.on('error', (e) => {
         // Logger.error(`Node Media WebSocketSecure Server ${e}`);
-        context.nodeEvent.emit("readyWssServer", e);
+        context.nodeEvent.emit("readyWssServer_" + this.sport, e);
       });
     }
 

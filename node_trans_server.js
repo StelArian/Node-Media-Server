@@ -24,7 +24,7 @@ class NodeTransServer {
       fs.accessSync(this.config.http.mediaroot, fs.constants.W_OK);
     } catch (error) {
       // Logger.error(`Node Media Trans Server startup failed. MediaRoot:${this.config.http.mediaroot} cannot be written.`);
-      context.nodeEvent.emit("readyTransServer", `Node Media Trans Server startup failed. MediaRoot:${this.config.http.mediaroot} cannot be written.`);
+      context.nodeEvent.emit('readyTransServer', this.onReadyTransServer(`Node Media Trans Server startup failed. MediaRoot:${this.config.http.mediaroot} cannot be written.`));
       return;
     }
 
@@ -32,7 +32,7 @@ class NodeTransServer {
       fs.accessSync(this.config.trans.ffmpeg, fs.constants.X_OK);
     } catch (error) {
       // Logger.error(`Node Media Trans Server startup failed. ffmpeg:${this.config.trans.ffmpeg} cannot be executed.`);
-      context.nodeEvent.emit("readyTransServer", `Node Media Trans Server startup failed. ffmpeg:${this.config.trans.ffmpeg} cannot be executed.`);
+      context.nodeEvent.emit('readyTransServer', this.onReadyTransServer(`Node Media Trans Server startup failed. ffmpeg:${this.config.trans.ffmpeg} cannot be executed.`));
       return;
     }
 
@@ -40,7 +40,7 @@ class NodeTransServer {
     if (version === '' || parseInt(version.split('.')[0]) < 4) {
       // Logger.error(`Node Media Trans Server startup failed. ffmpeg requires version 4.0.0 above`);
       // Logger.error('Download the latest ffmpeg static program:', getFFmpegUrl());
-      context.nodeEvent.emit("readyTransServer", 'Node Media Trans Server startup failed. ffmpeg requires version 4+');
+      context.nodeEvent.emit('readyTransServer', this.onReadyTransServer('Node Media Trans Server startup failed. ffmpeg requires version 4+.'));
       return;
     }
 
@@ -53,7 +53,7 @@ class NodeTransServer {
     context.nodeEvent.on('postPublish', this.onPostPublish.bind(this));
     context.nodeEvent.on('donePublish', this.onDonePublish.bind(this));
     Logger.log(`Node Media Trans Server started for apps: [ ${apps}] , MediaRoot: ${this.config.http.mediaroot}, ffmpeg version: ${version}`);
-    context.nodeEvent.emit("readyTransServer", null);
+    context.nodeEvent.emit('readyTransServer', null);
   }
 
   onPostPublish(id, streamPath, args) {

@@ -25,7 +25,7 @@ class NodeRelayServer {
       fs.accessSync(this.config.relay.ffmpeg, fs.constants.X_OK);
     } catch (error) {
       // Logger.error(`Node Media Relay Server startup failed. ffmpeg:${this.config.relay.ffmpeg} cannot be executed.`);
-      context.nodeEvent.emit("readyRelayServer", `Node Media Relay Server startup failed. ffmpeg:${this.config.relay.ffmpeg} cannot be executed.`);
+      context.nodeEvent.emit("readyRelayServer_" + this.config.rtmp.port, `Node Media Relay Server startup failed. ffmpeg:${this.config.relay.ffmpeg} cannot be executed.`);
       return;
     }
 
@@ -33,7 +33,7 @@ class NodeRelayServer {
     if (version === '' || parseInt(version.split('.')[0]) < 4) {
       // Logger.error('Node Media Relay Server startup failed. ffmpeg requires version 4.0.0 above');
       // Logger.error('Download the latest ffmpeg static program:', getFFmpegUrl());
-      context.nodeEvent.emit("readyRelayServer", "Node Media Relay Server startup failed. ffmpeg requires version 4+");
+      context.nodeEvent.emit("readyRelayServer_" + this.config.rtmp.port, "Node Media Relay Server startup failed. ffmpeg requires version 4+");
       return;
     }
     context.nodeEvent.on('relayPull', this.onRelayPull.bind(this));
@@ -44,7 +44,7 @@ class NodeRelayServer {
     context.nodeEvent.on('donePublish', this.onDonePublish.bind(this));
     this.staticCycle = setInterval(this.onStatic.bind(this), 1000);
     Logger.log('Node Media Relay Server started');
-    context.nodeEvent.emit("readyRelayServer", null);
+    context.nodeEvent.emit("readyRelayServer_" + this.config.rtmp.port, null);
   }
 
   onStatic() {

@@ -32,34 +32,6 @@ const config = {
 let nms = new NodeMediaServer(config)
 nms.run();
 
-nms.on('readyHttpServer', (error) => {
-  console.log('readyHttpServer', error);
-});
-
-nms.on('readyHttpsServer', (error) => {
-  console.log('readyHttpsServer', error);
-});
-
-nms.on('readyWsServer', (error) => {
-  console.log('readyWsServer', error);
-});
-
-nms.on('readyWssServer', (error) => {
-  console.log('readyWssServer', error);
-});
-
-nms.on('readyRelayServer', (error) => {
-  console.log('readyRelayServer', error);
-});
-
-nms.on('readyTransServer', (error) => {
-  console.log('readyTransServer', error);
-});
-
-nms.on('readyRtmpServer', (error) => {
-  console.log('readyRtmpServer', error);
-});
-
 nms.on('preConnect', (id, args) => {
   console.log('[NodeEvent on preConnect]', `id=${id} args=${JSON.stringify(args)}`);
   // let session = nms.getSession(id);
