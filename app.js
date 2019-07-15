@@ -33,6 +33,22 @@ const config = {
 let nms = new NodeMediaServer(config)
 nms.run();
 
+nms.on('runDoneHttpServer', () => {
+  console.log('runDoneHttpServer');
+})
+
+nms.on('runDoneHttpsServer', () => {
+  console.log('runDoneHttpsServer');
+})
+
+nms.on('runDoneWsServer', () => {
+  console.log('runDoneWsServer');
+})
+
+nms.on('runDoneWssServer', () => {
+  console.log('runDoneWssServer');
+})
+
 nms.on('preConnect', (id, args) => {
   console.log('[NodeEvent on preConnect]', `id=${id} args=${JSON.stringify(args)}`);
   // let session = nms.getSession(id);

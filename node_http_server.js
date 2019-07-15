@@ -87,6 +87,7 @@ class NodeHttpServer {
   run() {
     this.httpServer.listen(this.port, () => {
       Logger.log(`Node Media Http Server started on port: ${this.port}`);
+      context.nodeEvent.emit("runDoneHttpServer", this.port);
     });
 
     this.httpServer.on('error', (e) => {
@@ -106,6 +107,7 @@ class NodeHttpServer {
 
     this.wsServer.on('listening', () => {
       Logger.log(`Node Media WebSocket Server started on port: ${this.port}`);
+      context.nodeEvent.emit("runDoneWsServer", this.port);
     });
     this.wsServer.on('error', (e) => {
       Logger.error(`Node Media WebSocket Server ${e}`);
@@ -114,6 +116,7 @@ class NodeHttpServer {
     if (this.httpsServer) {
       this.httpsServer.listen(this.sport, () => {
         Logger.log(`Node Media Https Server started on port: ${this.sport}`);
+        context.nodeEvent.emit("runDoneHttpsServer", this.port);
       });
 
       this.httpsServer.on('error', (e) => {
@@ -133,6 +136,7 @@ class NodeHttpServer {
 
       this.wssServer.on('listening', () => {
         Logger.log(`Node Media WebSocketSecure Server started on port: ${this.sport}`);
+        context.nodeEvent.emit("runDoneWssServer", this.port);
       });
       this.wssServer.on('error', (e) => {
         Logger.error(`Node Media WebSocketSecure Server ${e}`);
