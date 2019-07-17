@@ -63,6 +63,7 @@ class NodeTransSession extends EventEmitter {
     Array.prototype.push.apply(argv, ['-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr]);
     argv = argv.filter((n) => { return n }); //去空
     this.ffmpeg_exec = spawn(this.conf.ffmpeg, argv);
+    console.log('\x1b[1m\x1b[36m' + this.conf.ffmpeg + ' ' + argv.join(' ') + '\x1b[0m'); 
     this.ffmpeg_exec.on('error', (e) => {
       Logger.ffdebug(e);
     });
